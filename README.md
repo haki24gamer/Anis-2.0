@@ -160,6 +160,8 @@ Likely needed composite indexes:
 - `shoppingItems`: `userId (asc) + status (asc)`
 - `nutritionEntries`: `userId (asc) + date (desc)`
 
+Important: index field order and direction must match your query order exactly.
+
 ---
 
 ## 8) Cloud Storage setup
