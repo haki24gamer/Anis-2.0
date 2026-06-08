@@ -11,9 +11,9 @@ If you are new to Firebase, follow these steps in order.
 ## 1) Create your Firebase project
 
 1. Go to https://console.firebase.google.com
-2. Click **Create project** → name it (for example `anis-prod`)
+2. Click **Create project** → name it (for example `anis-dev`)
 3. (Optional) Enable Google Analytics
-4. Create a second project for development (for example `anis-dev`)
+4. Create a second project for production (for example `anis-prod`)
 
 Recommended environments:
 - `anis-dev` (development)
@@ -124,6 +124,7 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // Create only: incoming document must belong to authenticated user
     function isOwner() {
       return isSignedIn() && request.auth.uid == request.resource.data.userId;
     }
@@ -152,12 +153,12 @@ When querying (for example by `userId`, `dueDate`, `priority`), Firebase may ask
 Create them in **Firestore → Indexes**.
 
 Likely needed composite indexes:
-- `tasks`: `userId + dueDate`
-- `tasks`: `userId + status + priority`
-- `notes`: `userId + updatedAt`
-- `reminders`: `userId + remindAt`
-- `shoppingItems`: `userId + status`
-- `nutritionEntries`: `userId + date`
+- `tasks`: `userId (asc) + dueDate (asc)`
+- `tasks`: `userId (asc) + status (asc) + priority (asc)`
+- `notes`: `userId (asc) + updatedAt (desc)`
+- `reminders`: `userId (asc) + remindAt (asc)`
+- `shoppingItems`: `userId (asc) + status (asc)`
+- `nutritionEntries`: `userId (asc) + date (desc)`
 
 ---
 
